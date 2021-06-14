@@ -1,0 +1,31 @@
+{
+  "name": "employee-payroll-app-backend",
+  "version": "1.0.0",
+  "description": "Employee Payroll Application With REST,Node,Express & MOngoDB\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Using \u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~REST,NODE,EXPRESS & MONGODB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaheen5/EMPLOYEE-PAYROLL-APP-BACKEND.git"
+  },
+  "keywords": [
+    "Express",
+    "RestAPI",
+    "MongoDB",
+    "Mongoose",
+    "Payroll"
+  ],
+  "author": "Shaheen M.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shaheen5/EMPLOYEE-PAYROLL-APP-BACKEND/issues"
+  },
+  "homepage": "https://github.com/shaheen5/EMPLOYEE-PAYROLL-APP-BACKEND#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13"
+  }
+}
