@@ -13,6 +13,9 @@ app.use(express.json());
 const dbConnect = require('./config/database.config');
 dbConnect();
 
+// Require Employees routes
+require('./app/routes/employee.routes.js')(app);
+
 //define a simple route
 app.get('/',(req,res)=>{
     res.json({"message" : "Welcome To Employee Payroll Application"});
