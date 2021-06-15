@@ -9,6 +9,10 @@ app.use(express.urlencoded({extended:true}))
 // parse requests of content-type - application/json
 app.use(express.json());
 
+// Configuring the database
+const dbConnect = require('./config/database.config');
+dbConnect();
+
 //define a simple route
 app.get('/',(req,res)=>{
     res.json({"message" : "Welcome To Employee Payroll Application"});
