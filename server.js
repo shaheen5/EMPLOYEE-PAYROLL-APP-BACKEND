@@ -1,5 +1,5 @@
 const express = require('express');
-
+require('dotenv').config();
 //create express app
 const app = express();
 
@@ -21,6 +21,7 @@ app.get('/',(req,res)=>{
     res.json({"message" : "Welcome To Employee Payroll Application"});
 });
 
-app.listen(8000,()=>{
-    console.log("Server is listening at port number 8000");
+const port = process.env.PORT;
+app.listen(port,()=>{
+    console.log(`Server is listening at port ${port}`);
 })

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 module.exports = ()=> {
     mongoose.Promise = global.Promise;
 
-    const url = 'mongodb://localhost:27017/emp-payroll'
+    const url = process.env.URL;
 
     // Connecting to the database
     mongoose.connect(url, {
