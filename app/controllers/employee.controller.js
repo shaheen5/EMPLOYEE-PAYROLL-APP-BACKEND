@@ -1,12 +1,14 @@
 const EmployeeService = require('../services/employee.service');
 
-class Controller {
+class EmployeeController {
 
     // Create and Save a new Note
-    create = (req, res) => {
+    
+    createNewEmployee = (req, res) => {
+        
         EmployeeService.createEmployee(req.body, (error, resultData) => {
             if (error) {
-                res.status(500).send({
+                return res.status(500).send({
                     message: error.message || "Some error occurred while creating the Note."
                 });
             }
@@ -14,21 +16,21 @@ class Controller {
         });
     }
     // Retrieve and return all employees from the database.
-    findAll = (req, res) => {
+    getAllEmployees = (req, res) => {
         EmployeeService.findAllEmployees((error, employees) => {
-            if (!employees) {
-                res.status(404).send("There are no employees created yet!");
-            }
             if (error) {
-                res.status(500).send({
+                return res.status(500).send({
                     message: err.message || "Some error occurred while retrieving employees."
                 });
+            }
+            if (!employees) {
+                return res.status(404).send("There are no employees created yet!");
             }
             res.send(employees);
         });
     };
     // Find a single employee with a employeeId
-    findOne = (req, res) => {
+    findEmployee = (req, res) => {
         EmployeeService.findEmployee(req.params.employeeId, (error, resultData) => {
             if (error) {
                 if (error.kind === 'ObjectId') {
@@ -45,7 +47,7 @@ class Controller {
     };
 
     // Update a employee identified by the employeeId in the request
-    update = (req, res) => {
+    updateEmployee = (req, res) => {
         EmployeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
             if (error) {
                 if (err.kind === 'ObjectId') {
@@ -61,7 +63,7 @@ class Controller {
         });
     };
     // Delete a employee with the specified employeeId in the request
-    delete = (req, res) => {
+    deleteEmployee = (req, res) => {
         EmployeeService.deleteEmployee(req.params.employeeId, (error, message) => {
             if (error) {
                 return res.status(500).send({
@@ -72,4 +74,4 @@ class Controller {
         });
     };
 }
-module.exports = new Controller();
+module.exports = new EmployeeController();
