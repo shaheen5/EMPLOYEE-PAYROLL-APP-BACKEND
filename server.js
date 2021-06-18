@@ -21,7 +21,6 @@ app.get('/',(req,res)=>{
     res.json({"message" : "Welcome To Employee Payroll Application"});
 });
 
-const port = process.env.PORT;
-app.listen(port,()=>{
-    console.log(`Server is listening at port ${port}`);
+app.listen(process.env.PORT,()=>{
+    console.log(`Server is listening at port ${process.env.PORT}`);
 })

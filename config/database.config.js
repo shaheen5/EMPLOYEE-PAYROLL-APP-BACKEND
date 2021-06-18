@@ -4,10 +4,8 @@ require('dotenv').config();
 module.exports = ()=> {
     mongoose.Promise = global.Promise;
 
-    const url = process.env.URL;
-
     // Connecting to the database
-    mongoose.connect(url, {
+    mongoose.connect(process.env.URL, {
         useNewUrlParser: true
     }).then(() => {
         console.log("Successfully connected to the database");
