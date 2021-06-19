@@ -5,5 +5,5 @@ module.exports = (app) => {
     app.post('/registerUser', user.registerUser);
 
     // login user
-    app.get('/login', employee.getAllEmployees);
+    app.get('/login',user.userLogin);
 }

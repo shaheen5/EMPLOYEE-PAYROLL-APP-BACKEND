@@ -16,7 +16,7 @@ class EmployeeController {
         EmployeeService.createEmployee(req.body, (error, resultData) => {
             if (error) {
                 return res.status(500).send({
-                    message: error.message || "Some error occurred while creating the Note."
+                    message: error.message || "Some error occurred while creating Employee."
                 });
             }
             res.send(resultData);
