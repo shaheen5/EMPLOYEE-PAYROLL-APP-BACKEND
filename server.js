@@ -10,8 +10,10 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 
 // Configuring the database
-const dbConnect = require('./config/database.config');
-dbConnect();
+const empDBConnect = require('./config/empDB.config');
+//empDBConnect();
+const userDBConnect = require('./config/userDB.config');
+userDBConnect();
 
 
 // Require Employees routes
