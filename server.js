@@ -15,7 +15,8 @@ const empDBConnect = require('./config/empDB.config');
 const userDBConnect = require('./config/userDB.config');
 userDBConnect();
 
-
+//require users route
+require('./app/routes/users.routes');
 // Require Employees routes
 require('./app/routes/employee.routes.js')(app);
 
