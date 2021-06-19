@@ -1,48 +1,17 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const EmployeeSchema = mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        validate: /^[a-zA-Z]{3,20}$/
-    },
-    lastName: {
-        type: String,
-        required: true,
-        validate: /^[a-zA-Z]{3,20}$/
-    },
-    emailId: {
-        type: String,
-        required: true,
-        validate: /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9]+[.]+[a-zA-Z]+$/,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-        validate: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
-
-    }
+    firstName: String,
+    lastName: String,
+    emailId: String,
+    password: String
 }, {
     timestamps: true
 });
 
-EmployeeSchema.pre("save", function (next) {
-  const employee = this;
-
-  bcrypt.hash(this.password, 10, (err, hashedPassword) => {
-    if (err) {
-      return next(err);
-    }
-    employee.password = hashedPassword;
-    next();
-  });
-});
-
 const Employee = mongoose.model('Employee', EmployeeSchema);
 
-class UserOperations {
+class EmployeeRegistration {
     addEmployee = (empData, callback) => {
         //create a employee
         const employee = new Employee({
@@ -51,7 +20,7 @@ class UserOperations {
             emailId: empData.emailId,
             password: empData.password
         });
-        employee.save({},(error, empData) => {
+        employee.save((error, empData) => {
             return (error) ? callback(error, null) : callback(null, empData);
         });
     }
@@ -87,4 +56,4 @@ class UserOperations {
         });
     }
 }
-module.exports = new UserOperations();
+module.exports = new EmployeeRegistration();

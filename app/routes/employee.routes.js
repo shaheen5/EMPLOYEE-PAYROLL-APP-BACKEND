@@ -5,14 +5,14 @@ module.exports = (app) => {
     app.post('/employees', employee.createNewEmployee);
 
     // Retrieve all employee
-    app.get('/employees', employee.getAllEmployees);
+    app.get('/getEmployees', employee.getAllEmployees);
 
     // Retrieve a single Employee with employeeId
-    app.get('/employees/:employeeId', employee.findEmployee);
+    app.get('/getEmployee/:employeeId', employee.findEmployee);
 
     // Update an Employee with employeeId
-    app.put('/employees/:employeeId', employee.updateEmployee);
+    app.put('/updateEmployee/:employeeId', employee.updateEmployee);
 
     // Delete an Employee with employeeId
-    app.delete('/employees/:employeeId', employee.deleteEmployee);
+    app.delete('/deleteEmployee/:employeeId', employee.deleteEmployee);
 }

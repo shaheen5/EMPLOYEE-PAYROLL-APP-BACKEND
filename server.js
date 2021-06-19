@@ -13,6 +13,7 @@ app.use(express.json());
 const dbConnect = require('./config/database.config');
 dbConnect();
 
+
 // Require Employees routes
 require('./app/routes/employee.routes.js')(app);
 

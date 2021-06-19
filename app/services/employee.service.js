@@ -1,6 +1,6 @@
 const Employee = require('../models/employee.model.js');
 
-class EmployeeRegistrationService {
+class EmployeeOperationsService {
 
     //create and save a new employee
 
@@ -37,4 +37,4 @@ class EmployeeRegistrationService {
         });
     }
 }
-module.exports = new EmployeeRegistrationService();
+module.exports = new EmployeeOperationsService();

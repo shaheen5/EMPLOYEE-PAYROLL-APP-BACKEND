@@ -1,18 +1,11 @@
 const EmployeeService = require('../services/employee.service');
-const EmployeeValidator = require('../middlewares/EmployeeValidation');
 
 class EmployeeController {
 
     // Create and Save a new Note
     
     createNewEmployee = (req, res) => {
-        let validationResult = EmployeeValidator.validate(req.body);
-        if (validationResult.error){
-            return res.status(400).send({
-                status:'error',
-                message: validationResult.error.details[0].message
-            });
-        }
+        
         EmployeeService.createEmployee(req.body, (error, resultData) => {
             if (error) {
                 return res.status(500).send({
