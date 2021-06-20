@@ -22,7 +22,6 @@ const EmployeeSchema = mongoose.Schema({
         type: String,
         required: true,
         validate: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
-
     }
 }, {
     timestamps: true

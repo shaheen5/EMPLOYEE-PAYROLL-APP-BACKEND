@@ -6,5 +6,6 @@ class UserService {
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
+    
 }
 module.exports = new UserService();

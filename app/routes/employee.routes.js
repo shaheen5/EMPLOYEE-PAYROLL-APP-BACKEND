@@ -1,5 +1,12 @@
 module.exports = (app) => {
     const employee = require('../controllers/employee.controller.js');
+    const user = require('../controllers/users.controller');
+
+    // Create a new user
+    app.post('/registerUser', user.registerUser);
+
+    // login user
+    app.post('/login',user.userLogin);
 
     // Create a new Employee
     app.post('/employees', employee.createNewEmployee);

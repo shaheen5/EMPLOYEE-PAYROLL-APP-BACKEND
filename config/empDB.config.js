@@ -5,11 +5,11 @@ module.exports = () => {
     mongoose.Promise = global.Promise;
 
     // Connecting to the database
-    mongoose.connect(process.env.EMPLOYEE_DB_URL, {
+    mongoose.connect(process.env.URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(() => {
-        console.log("Successfully connected to the employee database");
+        console.log("Successfully connected to the database");
     }).catch(err => {
         console.log('Could not connect to the database. Exiting now...', err);
         process.exit();

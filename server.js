@@ -10,14 +10,10 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 
 // Configuring the database
-const empDBConnect = require('./config/empDB.config');
-//empDBConnect();
-const userDBConnect = require('./config/userDB.config');
-userDBConnect();
+const dbConnect = require('./config/empDB.config');
+dbConnect();
 
-//require users route
-require('./app/routes/users.routes')(app);
-// Require Employees routes
+// Require routes
 require('./app/routes/employee.routes.js')(app);
 
 //define a simple route
@@ -27,4 +23,4 @@ app.get('/',(req,res)=>{
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server is listening at port ${process.env.PORT}`);
-})
+});
