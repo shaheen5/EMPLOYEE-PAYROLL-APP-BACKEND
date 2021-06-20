@@ -26,7 +26,8 @@ const UserSchema = mongoose.Schema({
 });
 const User = mongoose.model('User', UserSchema);
 
-class UserModel {
+class UserRegistrationAndLogin {
+    //register new user
     addNewUser = (userData,callback) => {
         //create new user
         const user = new User({
@@ -39,5 +40,14 @@ class UserModel {
             return (error) ? callback(error, null) : callback(null, userData);
         });
     }    
+
+    //login user
+    userLogin = (loginDetails,callback)=> {
+        User.findOne({emailId:loginDetails.emailId},(err,data)=>{
+            if(err) return callback(err,null);
+            if(!data) return callback('User Not Found',null);
+            else return callback(null,data);
+        });
+    }
 }
-module.exports = new UserModel();
+module.exports = new UserRegistrationAndLogin();
