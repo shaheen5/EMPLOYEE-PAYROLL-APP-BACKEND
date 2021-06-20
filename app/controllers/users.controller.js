@@ -1,9 +1,17 @@
-
 const  userService = require('../services/user.service');
+const UserValidator = require('../middlewares/UserValidation');
 
 class UserController {
     //register user
     registerUser = (req,res)=>{
+        let validationResult = UserValidator.validate(req.body);
+        if (validationResult.error){
+            return res.status(400).send({
+                status:'error',
+                message: validationResult.error.details[0].message
+            });
+        }
+
         userService.registerUser(req.body,(err,userData)=>{
             if (err) {
                 return res.status(500).send({

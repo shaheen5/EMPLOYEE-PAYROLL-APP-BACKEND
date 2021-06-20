@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const UserSchema = mongoose.Schema({
     firstName: {
@@ -24,6 +25,20 @@ const UserSchema = mongoose.Schema({
 }, {
     timestamps: true
 });
+
+//encrypt password using hashing before saving in database
+UserSchema.pre("save", function (next) {
+    const employee = this;
+  
+    bcrypt.hash(this.password, 10, (err, hashedPassword) => {
+      if (err) {
+        return next(err);
+      }
+      employee.password = hashedPassword;
+      next();
+    });
+  });
+
 const User = mongoose.model('User', UserSchema);
 
 class UserRegistrationAndLogin {
