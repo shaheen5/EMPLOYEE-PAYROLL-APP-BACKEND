@@ -1,15 +1,36 @@
+/**********************************************************************************************************
+ *  Execution    : 1. Default node with npm   cmd> npm server.js
+                   2. If nodemon installed    cmd> nodemon start
+ *
+ * Purpose      : controller handles request and responses of employee CRUD API
+ *
+ * @description  :modules need to be required before execution of this file 
+ *
+ * @file        : controller/employee.controller.js
+ * @overview    : Handles requests coming from clients
+ * @module      : neccessary part (controller) of MVC Model of employee Payroll API
+ * @author      : Shaheen M.
+ * @version     : 1.0
+ * @since       : 15-06-2021
+ **********************************************************************************************************/
+
 const EmployeeService = require('../services/employee.service');
 const EmployeeValidator = require('../middlewares/EmployeeValidation');
 
 class EmployeeController {
 
-    // Create and Save a new Note
-    
+    /**
+  * function to validate re body received from client and call service createEmployee function
+  * @param {*} req (express property)
+  * @param {*} res (express property)
+  * @returns HTTP status and object
+  */
+
     createNewEmployee = (req, res) => {
         let validationResult = EmployeeValidator.validate(req.body);
-        if (validationResult.error){
+        if (validationResult.error) {
             return res.status(400).send({
-                status:'error',
+                status: 'error',
                 message: validationResult.error.details[0].message
             });
         }
@@ -22,7 +43,13 @@ class EmployeeController {
             res.send(resultData);
         });
     }
-    // Retrieve and return all employees from the database.
+
+    /**
+   * function to call the findAllEmployees function of service layer which retrives data from db
+   * @param {*} req (express property)
+   * @param {*} res (express property)
+   * @returns HTTP status and object
+   */
     getAllEmployees = (req, res) => {
         EmployeeService.findAllEmployees((error, employees) => {
             if (error) {
@@ -36,7 +63,13 @@ class EmployeeController {
             res.send(employees);
         });
     };
-    // Find a single employee with a employeeId
+
+    /**
+   * function to call the findEmployee function of service that gets the required employee data from db
+   * @param {*} req (express property)
+   * @param {*} res (express property)
+   * @returns HTTP status and employee object
+   */
     findEmployee = (req, res) => {
         EmployeeService.findEmployee(req.params.employeeId, (error, resultData) => {
             if (error) {
@@ -53,7 +86,12 @@ class EmployeeController {
         });
     };
 
-    // Update a employee identified by the employeeId in the request
+    /**
+   * function to call the update function that updates the required employee data from db
+   * @param {*} req (express property)
+   * @param {*} res (express property)
+   * @returns HTTP status and object
+   */
     updateEmployee = (req, res) => {
         EmployeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
             if (error) {
@@ -69,7 +107,14 @@ class EmployeeController {
             res.send(resultData);
         });
     };
-    // Delete a employee with the specified employeeId in the request
+
+    /**
+       * function to call the deleteEmployee function of service layer that deletes
+       *  the required employee data from the db 
+       * @param {*} req (express property)
+       * @param {*} res (express property)
+       * @returns HTTP status and object
+       */
     deleteEmployee = (req, res) => {
         EmployeeService.deleteEmployee(req.params.employeeId, (error, message) => {
             if (error) {

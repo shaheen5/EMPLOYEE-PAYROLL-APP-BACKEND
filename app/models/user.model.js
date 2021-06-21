@@ -1,3 +1,18 @@
+/**********************************************************************************************************
+ *  Execution    : 1. Default node with npm   cmd> npm server.js
+                   2. If nodemon installed    cmd> nodemon start
+ *
+ * Purpose      : define user schema for database , use mongoose methods to perform db operations 
+ *
+ * @description  :modules need to be required before execution of this file  
+ *
+ * @file        : models/user.model.js
+ * @overview    : Provides schema for database and performs mongoose CRUD operations
+ * @module      : neccessary to define user schema for database ,define functions accessed by services layer  
+ * @author      : Shaheen M.
+ * @version     : 1.0
+ * @since       : 15-06-2021
+ **********************************************************************************************************/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -29,21 +44,25 @@ const UserSchema = mongoose.Schema({
 //encrypt password using hashing before saving in database
 UserSchema.pre("save", function (next) {
     const employee = this;
-  
+
     bcrypt.hash(this.password, 10, (err, hashedPassword) => {
-      if (err) {
-        return next(err);
-      }
-      employee.password = hashedPassword;
-      next();
+        if (err) {
+            return next(err);
+        }
+        employee.password = hashedPassword;
+        next();
     });
-  });
+});
 
 const User = mongoose.model('User', UserSchema);
 
 class UserRegistrationAndLogin {
-    //register new user
-    addNewUser = (userData,callback) => {
+    /**
+        * @description adNewUser method is to save the new User Data in database
+        * @param userdData is data sent from Services layer
+        * @return callback is used to callback Services includes error message or data
+        */
+    addNewUser = (userData, callback) => {
         //create new user
         const user = new User({
             firstName: userData.firstName,
@@ -54,14 +73,18 @@ class UserRegistrationAndLogin {
         user.save((error, userData) => {
             return (error) ? callback(error, null) : callback(null, userData);
         });
-    }    
+    }
 
-    //login user
-    userLogin = (loginDetails,callback)=> {
-        User.findOne({emailId:loginDetails.emailId},(err,data)=>{
-            if(err) return callback(err,null);
-            if(!data) return callback('User Not Found',null);
-            else return callback(null,data);
+    /**
+        * @description Get the user data by emailID
+        * @param loginDetails having emailId and password
+        * @return callback is used to callback Services with data or error message
+        */
+    userLogin = (loginDetails, callback) => {
+        User.findOne({ emailId: loginDetails.emailId }, (err, data) => {
+            if (err) return callback(err, null);
+            if (!data) return callback('User Not Found', null);
+            else return callback(null, data);
         });
     }
 }
