@@ -48,6 +48,10 @@ class UserController {
         * @param {*} res (express property)
         */
     userLogin = (req, res) => {
+        //check whether request body contains only email and password as input
+        if(Object.keys(req.body).length != 2){
+            return res.status(400).send({success:false,message:"Invalid Input!"});
+        }
         const loginDetails = ({
             emailId: req.body.emailId,
             password: req.body.password,
