@@ -16,7 +16,7 @@
 const User = require('../models/user.model');
 
 class UserService {
-
+    
     /**
        * creates a new user 
        * @param {*} req (express property)
@@ -30,7 +30,7 @@ class UserService {
                 return (error) ? callback(error, null) : callback(null, data);
             });
         } catch (error) {
-            return callback(error, null);
+            return callback(error,null);
         }
     }
 
@@ -46,7 +46,7 @@ class UserService {
                 return err ? callback(err, null) : callback(null, data);
             });
         } catch (error) {
-            return callback(error, null);
+            return callback(error,null);
         }
     }
 }

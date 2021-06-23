@@ -15,7 +15,7 @@
  **********************************************************************************************************/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
+const jwt = require('jsonwebtoken');
 const UserSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -65,17 +65,17 @@ class UserRegistrationAndLogin {
     addNewUser = (userData, callback) => {
         try {
             //create new user
-        const user = new User({
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            emailId: userData.emailId,
-            password: userData.password
-        });
-        user.save((error, userData) => {
-            return (error) ? callback(error, null) : callback(null, userData);
-        });
+            const user = new User({
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                emailId: userData.emailId,
+                password: userData.password
+            });
+            user.save((error, userData) => {
+                return (error) ? callback(error, null) : callback(null, userData);
+            });
         } catch (error) {
-            return(error,null);
+            return (error, null);
         }
     }
 
@@ -89,10 +89,13 @@ class UserRegistrationAndLogin {
             User.findOne({ emailId: loginDetails.emailId }, (err, data) => {
                 if (err) return callback(err, null);
                 if (!data) return callback('User Not Found', null);
-                else return callback(null, data);
+                if (bcrypt.compareSync(loginDetails.password, data.password)) {
+                    return callback(null, data);
+                }
+                else return callback("Unauthorized User!", null);
             });
         } catch (error) {
-            return callback(error,null);
+            return callback(error, null);
         }
     }
 }
