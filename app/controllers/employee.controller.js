@@ -27,21 +27,25 @@ class EmployeeController {
   */
 
     createNewEmployee = (req, res) => {
-        let validationResult = EmployeeValidator.validate(req.body);
-        if (validationResult.error) {
-            return res.status(400).send({
-                status: 'error',
-                message: validationResult.error.details[0].message
-            });
-        }
-        EmployeeService.createEmployee(req.body, (error, resultData) => {
-            if (error) {
-                return res.status(500).send({
-                    message: error.message || "Some error occurred while creating Employee."
+        try {
+            let validationResult = EmployeeValidator.validate(req.body);
+            if (validationResult.error) {
+                return res.status(400).send({
+                    status: 'error',
+                    message: validationResult.error.details[0].message
                 });
             }
-            res.send(resultData);
-        });
+            EmployeeService.createEmployee(req.body, (error, resultData) => {
+                if (error) {
+                    return res.status(500).send({
+                        message: error.message || "Some error occurred while creating Employee."
+                    });
+                }
+                res.send(resultData);
+            });
+        } catch (error) {
+            return res.send({ message: error.message });
+        }
     }
 
     /**
@@ -51,17 +55,21 @@ class EmployeeController {
    * @returns HTTP status and object
    */
     getAllEmployees = (req, res) => {
-        EmployeeService.findAllEmployees((error, employees) => {
-            if (error) {
-                return res.status(500).send({
-                    message: err.message || "Some error occurred while retrieving employees."
-                });
-            }
-            if (!employees) {
-                return res.status(404).send("There are no employees created yet!");
-            }
-            res.send(employees);
-        });
+        try {
+            EmployeeService.findAllEmployees((error, employees) => {
+                if (error) {
+                    return res.status(500).send({
+                        message: err.message || "Some error occurred while retrieving employees."
+                    });
+                }
+                if (!employees) {
+                    return res.status(404).send("There are no employees created yet!");
+                }
+                res.send(employees);
+            });
+        } catch (error) {
+            return res.send({ message: error.message });
+        }
     };
 
     /**
@@ -71,19 +79,23 @@ class EmployeeController {
    * @returns HTTP status and employee object
    */
     findEmployee = (req, res) => {
-        EmployeeService.findEmployee(req.params.employeeId, (error, resultData) => {
-            if (error) {
-                if (error.kind === 'ObjectId') {
-                    return res.status(404).send({
-                        message: "Employee not found with id " + req.params.employeeId
+        try {
+            EmployeeService.findEmployee(req.params.employeeId, (error, resultData) => {
+                if (error) {
+                    if (error.kind === 'ObjectId') {
+                        return res.status(404).send({
+                            message: "Employee not found with id " + req.params.employeeId
+                        });
+                    }
+                    return res.status(500).send({
+                        message: "Error retrieving employee with id " + req.params.employeeId
                     });
                 }
-                return res.status(500).send({
-                    message: "Error retrieving employee with id " + req.params.employeeId
-                });
-            }
-            res.send(resultData);
-        });
+                res.send(resultData);
+            });
+        } catch (error) {
+            return res.send({ message: error.message });
+        }
     };
 
     /**
@@ -93,19 +105,24 @@ class EmployeeController {
    * @returns HTTP status and object
    */
     updateEmployee = (req, res) => {
-        EmployeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
-            if (error) {
-                if (err.kind === 'ObjectId') {
-                    return res.status(404).send({
-                        message: "Employee not found with id " + req.params.employeeId
+        try {
+            EmployeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
+                if (error) {
+                    if (err.kind === 'ObjectId') {
+                        return res.status(404).send({
+                            message: "Employee not found with id " + req.params.employeeId
+                        });
+                    }
+                    return res.status(500).send({
+                        message: "Error updating employee with id " + req.params.employeeId
                     });
                 }
-                return res.status(500).send({
-                    message: "Error updating employee with id " + req.params.employeeId
-                });
-            }
-            res.send(resultData);
-        });
+                res.send(resultData);
+            });
+
+        } catch (error) {
+            return res.send({ message: error.message });
+        }
     };
 
     /**
@@ -116,14 +133,18 @@ class EmployeeController {
        * @returns HTTP status and object
        */
     deleteEmployee = (req, res) => {
-        EmployeeService.deleteEmployee(req.params.employeeId, (error, message) => {
-            if (error) {
-                return res.status(500).send({
-                    message: "Error deleting employee with id " + req.params.employeeId
-                });
-            }
-            res.send(message);
-        });
+        try {
+            EmployeeService.deleteEmployee(req.params.employeeId, (error, message) => {
+                if (error) {
+                    return res.status(500).send({
+                        message: "Error deleting employee with id " + req.params.employeeId
+                    });
+                }
+                res.send(message);
+            });
+        } catch (error) {
+            return res.send({ message: error.message });
+        }
     };
 }
 module.exports = new EmployeeController();

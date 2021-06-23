@@ -57,21 +57,25 @@ EmployeeSchema.pre("save", function (next) {
 const Employee = mongoose.model('Employee', EmployeeSchema);
 
 class UserOperations {
-    addEmployee = (empData, callback) => {
-        /**
-            * @description addEmployee method is to save the new Employee Data
-            * @param empData is data sent from Services layer
-            * @return callback is used to callback Services includes error message or data
+    /**
+        * @description addEmployee method is to save the new Employee Data
+        * @param empData is data sent from Services layer
+        * @return callback is used to callback Services includes error message or data
             */
-        const employee = new Employee({
-            firstName: empData.firstName,
-            lastName: empData.lastName,
-            emailId: empData.emailId,
-            password: empData.password
-        });
-        employee.save({}, (error, empData) => {
-            return (error) ? callback(error, null) : callback(null, empData);
-        });
+    addEmployee = (empData, callback) => {
+        try {
+            const employee = new Employee({
+                firstName: empData.firstName,
+                lastName: empData.lastName,
+                emailId: empData.emailId,
+                password: empData.password
+            });
+            employee.save({}, (error, empData) => {
+                return (error) ? callback(error, null) : callback(null, empData);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     }
     /**
         * @description retrive all the Employee Data from database
@@ -79,9 +83,13 @@ class UserOperations {
         * @return callback is used to callback Services with data or error message
         */
     findAllEmployees = (callback) => {
-        Employee.find((error, empData) => {
-            return callback(error, empData);
-        });
+        try {
+            Employee.find((error, empData) => {
+                return (error) ? callback(error, null) : callback(null, empData);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     }
     /**
         * @description retrive the Employee Data from MongoDB
@@ -89,9 +97,13 @@ class UserOperations {
         * @return callback is used to callback Services with data or error message
         */
     findEmployeeById = (employeeId, callback) => {
-        Employee.findById(employeeId, (error, empData) => {
-            return (error) ? callback(error, null) : callback(null, empData);
-        });
+        try {
+            Employee.findById(employeeId, (error, empData) => {
+                return (error) ? callback(error, null) : callback(null, empData);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     }
     /**
        * @description Update the employee Data by Id
@@ -99,15 +111,19 @@ class UserOperations {
        * @return callback is used to callback Services with data or error message
        */
     updateEmployeeById = (employeeId, empData, callback) => {
-        //find employee by id and update it with the request body
-        Employee.findByIdAndUpdate(employeeId, {
-            firstName: empData.firstName,
-            lastName: empData.lastName,
-            emailId: empData.emailId,
-            password: empData.password
-        }, { new: true }, (error, Data) => {
-            return (error) ? callback(error, null) : callback(null, Data);
-        });
+        try {
+            //find employee by id and update it with the request body
+            Employee.findByIdAndUpdate(employeeId, {
+                firstName: empData.firstName,
+                lastName: empData.lastName,
+                emailId: empData.emailId,
+                password: empData.password
+            }, { new: true }, (error, Data) => {
+                return (error) ? callback(error, null) : callback(null, Data);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     }
     /**
         * @description delete the Employee Data from database
@@ -115,10 +131,14 @@ class UserOperations {
         * @return callback is used to callback Services with or without error message
         */
     removeEmployee = (employeeId, callback) => {
-        Employee.findByIdAndRemove(employeeId, (error, message) => {
-            if (error) return callback(error, { "message": error.message });
-            else return callback(null, { "message": "Employee was deleted successfully" });
-        });
+        try {
+            Employee.findByIdAndRemove(employeeId, (error, message) => {
+                if (error) return callback(error, { "message": error.message });
+                else return callback(null, { "message": "Employee was deleted successfully" });
+            });
+        } catch (error) {
+            return callback(error, "Some error occurred!");
+        }
     }
 }
 module.exports = new UserOperations();

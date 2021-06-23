@@ -63,7 +63,8 @@ class UserRegistrationAndLogin {
         * @return callback is used to callback Services includes error message or data
         */
     addNewUser = (userData, callback) => {
-        //create new user
+        try {
+            //create new user
         const user = new User({
             firstName: userData.firstName,
             lastName: userData.lastName,
@@ -73,6 +74,9 @@ class UserRegistrationAndLogin {
         user.save((error, userData) => {
             return (error) ? callback(error, null) : callback(null, userData);
         });
+        } catch (error) {
+            return(error,null);
+        }
     }
 
     /**
@@ -81,11 +85,15 @@ class UserRegistrationAndLogin {
         * @return callback is used to callback Services with data or error message
         */
     userLogin = (loginDetails, callback) => {
-        User.findOne({ emailId: loginDetails.emailId }, (err, data) => {
-            if (err) return callback(err, null);
-            if (!data) return callback('User Not Found', null);
-            else return callback(null, data);
-        });
+        try {
+            User.findOne({ emailId: loginDetails.emailId }, (err, data) => {
+                if (err) return callback(err, null);
+                if (!data) return callback('User Not Found', null);
+                else return callback(null, data);
+            });
+        } catch (error) {
+            return callback(error,null);
+        }
     }
 }
 module.exports = new UserRegistrationAndLogin();

@@ -24,9 +24,13 @@ class EmployeeOperationsService {
        * @returns callback
        */
     createEmployee = (empData, callback) => {
-        Employee.addEmployee(empData, (error, data) => {
-            return (error) ? callback(error, null) : callback(null, data);
-        });
+        try {
+            Employee.addEmployee(empData, (error, data) => {
+                return (error) ? callback(error, null) : callback(null, data);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     }
 
     /**
@@ -34,9 +38,13 @@ class EmployeeOperationsService {
    * @param {*} callback callback function
    */
     findAllEmployees = (callback) => {
-        Employee.findAllEmployees((error, empData) => {
-            return callback(error, empData);
-        });
+        try {
+            Employee.findAllEmployees((error, empData) => {
+                return (error) ? callback(error, null) : callback(null, empData);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     };
 
     /**
@@ -46,9 +54,13 @@ class EmployeeOperationsService {
    * @returns callback, object
    */
     findEmployee = (employeeId, callback) => {
-        Employee.findEmployeeById(employeeId, (error, empData) => {
-            return (error) ? callback(error, null) : callback(null, empData);
-        });
+        try {
+            Employee.findEmployeeById(employeeId, (error, empData) => {
+                return (error) ? callback(error, null) : callback(null, empData);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     }
 
     /**
@@ -58,9 +70,13 @@ class EmployeeOperationsService {
      * @param {*} callback function
      */
     updateEmployeeDetails = (employeeId, empData, callback) => {
-        Employee.updateEmployeeById(employeeId, empData, (error, data) => {
-            return (error) ? callback(error, null) : callback(null, data);
-        })
+        try {
+            Employee.updateEmployeeById(employeeId, empData, (error, data) => {
+                return (error) ? callback(error, null) : callback(null, data);
+            });
+        } catch (error) {
+            return callback(error, null);
+        }
     };
 
     /**
@@ -70,10 +86,14 @@ class EmployeeOperationsService {
    * @returns 
    */
     deleteEmployee = (employeeId, callback) => {
-        Employee.removeEmployee(employeeId, (error, message) => {
-            if (error) return callback(error, { "message": "Employee could not be deleted" });
-            else return callback(null, { "message": "Employee was deleted successfully" });
-        });
+        try {
+            Employee.removeEmployee(employeeId, (error, message) => {
+                if (error) return callback(error, { "message": "Employee could not be deleted" });
+                else return callback(null, { "message": "Employee was deleted successfully" });
+            });
+        } catch (error) {
+            return callback(error,null);
+        }
     }
 }
 module.exports = new EmployeeOperationsService();

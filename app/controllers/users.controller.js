@@ -24,22 +24,27 @@ class UserController {
         * @returns HTTP status and object
         */
     registerUser = (req, res) => {
-        let validationResult = UserValidator.validate(req.body);
-        if (validationResult.error) {
-            return res.status(400).send({
-                status: 'error',
-                message: validationResult.error.details[0].message
-            });
-        }
-
-        userService.registerUser(req.body, (err, userData) => {
-            if (err) {
-                return res.status(500).send({
-                    message: err.message || "Some error occurred while registering user."
+        try {
+            let validationResult = UserValidator.validate(req.body);
+            if (validationResult.error) {
+                return res.status(400).send({
+                    status: 'error',
+                    message: validationResult.error.details[0].message
                 });
             }
-            res.send(userData);
-        });
+
+            userService.registerUser(req.body, (err, userData) => {
+                if (err) {
+                    return res.status(500).send({
+                        message: err.message || "Some error occurred while registering user."
+                    });
+                }
+                res.send(userData);
+            });
+
+        } catch (error) {
+            return res.send({ message: error.message })
+        }
     }
 
     /**
@@ -48,19 +53,27 @@ class UserController {
         * @param {*} res (express property)
         */
     userLogin = (req, res) => {
-        //check whether request body contains only email and password as input
-        if(Object.keys(req.body).length != 2){
-            return res.status(400).send({success:false,message:"Invalid Input!"});
-        }
-        const loginDetails = ({
-            emailId: req.body.emailId,
-            password: req.body.password,
-        });
+        try {
+            //check whether request body contains only email and password as input
+            if (Object.keys(req.body).length != 2) {
+                return res.status(400).send({ success: false, message: "Invalid Input!" });
+            }
+            //check password is not empty
+            if (!req.body.password) {
+                return res.status(400).send({ success: false, message: "Password cannot be empty!" });
+            }
+            const loginDetails = ({
+                emailId: req.body.emailId,
+                password: req.body.password,
+            });
 
-        userService.userLogin(loginDetails, (err, data) => {
-            return err ? res.status(400).send({ success: false, message: err })
-                : res.status(200).send({ success: true, message: "User Login Successful", data: data });
-        });
+            userService.userLogin(loginDetails, (err, data) => {
+                return err ? res.status(400).send({ success: false, message: err })
+                    : res.status(200).send({ success: true, message: "User Login Successful", data: data });
+            });
+        } catch (error) {
+            return res.send({ message: error.message });
+        }
     }
 }
 
