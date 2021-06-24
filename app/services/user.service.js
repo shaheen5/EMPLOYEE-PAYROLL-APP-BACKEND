@@ -16,7 +16,7 @@
 const User = require('../models/user.model');
 const helper = require('../middlewares/helper');
 class UserService {
-    
+
     /**
        * creates a new user 
        * @param {*} req (express property)
@@ -30,7 +30,7 @@ class UserService {
                 return (error) ? callback(error, null) : callback(null, data);
             });
         } catch (error) {
-            return callback(error,null);
+            return callback(error, null);
         }
     }
 
@@ -43,16 +43,17 @@ class UserService {
     userLogin = (loginDetails, callback) => {
         try {
             User.userLogin(loginDetails, (err, data) => {
-                if(err){
-                    return callback(err,null)
+                if (err) {
+                    return callback(err, null)
                 }
-                if (helper.checkPassword(loginDetails.password,data.password)){
-                    return callback(null,data);
+                if (helper.checkPassword(loginDetails.password, data.password)) {
+                    return callback("Pasword is incorrect", null);
                 }
-                else return callback("Unauthorized User!", null);
+                const userToken = helper.getGeneratedToken(loginDetails);
+                return callback(null, userToken);
             });
         } catch (error) {
-            return callback(error,null);
+            return callback(error, null);
         }
     }
 }

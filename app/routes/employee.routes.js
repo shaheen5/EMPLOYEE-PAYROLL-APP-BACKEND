@@ -16,25 +16,25 @@
 module.exports = (app) => {
     const employee = require('../controllers/employee.controller.js');
     const user = require('../controllers/users.controller');
-
-    // Create a new user
-    app.post('/registerUser', user.registerUser);
+    const helper = require('../middlewares/helper');
+        // Create a new user
+        app.post('/registerUser', user.registerUser);
 
     // login user
-    app.post('/login',user.userLogin);
+    app.post('/login', user.userLogin);
 
     // Create a new Employee
     app.post('/employees', employee.createNewEmployee);
 
     // Retrieve all employee
-    app.get('/getEmployees', employee.getAllEmployees);
+    app.get('/getEmployees',helper.authenticateToken, employee.getAllEmployees);
 
     // Retrieve a single Employee with employeeId
-    app.get('/getEmployee/:employeeId', employee.findEmployee);
+    app.get('/getEmployee/:employeeId',helper.authenticateToken, employee.findEmployee);
 
     // Update an Employee with employeeId
-    app.put('/updateEmployee/:employeeId', employee.updateEmployee);
+    app.put('/updateEmployee/:employeeId',helper.authenticateToken, employee.updateEmployee);
 
     // Delete an Employee with employeeId
-    app.delete('/deleteEmployee/:employeeId', employee.deleteEmployee);
+    app.delete('/deleteEmployee/:employeeId',helper.authenticateToken ,employee.deleteEmployee);
 }

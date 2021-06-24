@@ -29,8 +29,51 @@ class Helper {
    */
     checkPassword(userEnteredPassword, passwordInDB) {
         return userEnteredPassword && passwordInDB
-            ? bcrypt.compareSync(userEnteredPassword, passwordInDB)
+            ? (!bcrypt.compareSync(userEnteredPassword, passwordInDB))
             : false;
+    }
+    /**
+   * Method For Token generation
+   * @param {object} userData data from client/user
+   * @returns token
+   */
+    getGeneratedToken(userData) {
+        try {
+            const token = jwt.sign(userData, process.env.SECRET_KEY, {
+                expiresIn: '200000s',
+            });
+            return token;
+        } catch (error) {
+            console.error();
+        }
+    }
+    /**
+   * To authenticate token
+   * @param {*} req (express property)
+   * @param {*} res (express property)
+   * @param {*} next (express property)
+   * @returns HTTP status and object
+   */
+    authenticateToken(req, res, next) {
+        const token = req.get('token');
+
+        if (token) {
+            jwt.verify(token, process.env.SECRET_KEY, (err) => {
+                if (err) {
+                    return res.status(400).send({
+                        success: false,
+                        message: err.message || 'Invalid token!',
+                    });
+                } else {
+                    next();
+                }
+            });
+        } else {
+            return res.status(401).send({
+                success: false,
+                message: 'Unauthorized User!',
+            });
+        }
     }
 }
 module.exports = new Helper();
