@@ -14,7 +14,7 @@
  * @since       : 15-06-2021
  **********************************************************************************************************/
 const User = require('../models/user.model');
-
+const helper = require('../middlewares/helper');
 class UserService {
     
     /**
@@ -43,7 +43,13 @@ class UserService {
     userLogin = (loginDetails, callback) => {
         try {
             User.userLogin(loginDetails, (err, data) => {
-                return err ? callback(err, null) : callback(null, data);
+                if(err){
+                    return callback(err,null)
+                }
+                if (helper.checkPassword(loginDetails.password,data.password)){
+                    return callback(null,data);
+                }
+                else return callback("Unauthorized User!", null);
             });
         } catch (error) {
             return callback(error,null);

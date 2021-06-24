@@ -89,10 +89,7 @@ class UserRegistrationAndLogin {
             User.findOne({ emailId: loginDetails.emailId }, (err, data) => {
                 if (err) return callback(err, null);
                 if (!data) return callback('User Not Found', null);
-                if (bcrypt.compareSync(loginDetails.password, data.password)) {
-                    return callback(null, data);
-                }
-                else return callback("Unauthorized User!", null);
+                return callback(null,data);
             });
         } catch (error) {
             return callback(error, null);
