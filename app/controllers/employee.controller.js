@@ -31,20 +31,28 @@ class EmployeeController {
             let validationResult = EmployeeValidator.validate(req.body);
             if (validationResult.error) {
                 return res.status(400).send({
-                    status: 'error',
+                    success: false,
                     message: validationResult.error.details[0].message
                 });
             }
             EmployeeService.createEmployee(req.body, (error, resultData) => {
                 if (error) {
                     return res.status(500).send({
+                        success: false,
                         message: error.message || "Some error occurred while creating Employee."
                     });
                 }
-                res.send(resultData);
+                res.status(201).send({
+                    success: true,
+                    data: resultData,
+                    message: "Employee Added Succesfully!"
+                });
             });
         } catch (error) {
-            return res.send({ message: error.message });
+            return res.status(500).send({
+                success: false,
+                message: error.message
+            });
         }
     }
 
@@ -59,16 +67,23 @@ class EmployeeController {
             EmployeeService.findAllEmployees((error, employees) => {
                 if (error) {
                     return res.status(500).send({
+                        success:false,
                         message: err.message || "Some error occurred while retrieving employees."
                     });
                 }
                 if (!employees) {
                     return res.status(404).send("There are no employees created yet!");
                 }
-                res.send(employees);
+                res.status(200).send({
+                    success:true,
+                    data:employees,
+                    message:"Successfully Retrieved All Employees !"
+                });
             });
         } catch (error) {
-            return res.send({ message: error.message });
+            return res.status(500).send({ 
+                success:false,
+                message: error.message });
         }
     };
 
@@ -84,14 +99,20 @@ class EmployeeController {
                 if (error) {
                     if (error.kind === 'ObjectId') {
                         return res.status(404).send({
+                            success:false,
                             message: "Employee not found with id " + req.params.employeeId
                         });
                     }
                     return res.status(500).send({
+                        success:false,
                         message: "Error retrieving employee with id " + req.params.employeeId
                     });
                 }
-                res.send(resultData);
+                res.status(200).send({
+                    success:true,
+                    data:resultData,
+                    message:"Found Employee Details successfully!"
+                });
             });
         } catch (error) {
             return res.send({ message: error.message });
@@ -117,11 +138,17 @@ class EmployeeController {
                         message: "Error updating employee with id " + req.params.employeeId
                     });
                 }
-                res.send(resultData);
+                res.send({
+                    success:true,
+                    message:"Employee Details Updated Successfully!",
+                    data:resultData
+                });
             });
 
         } catch (error) {
-            return res.send({ message: error.message });
+            return res.send({ 
+                success:false,
+                message: error.message });
         }
     };
 

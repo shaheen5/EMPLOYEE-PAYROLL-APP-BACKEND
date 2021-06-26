@@ -28,7 +28,7 @@ class UserController {
             let validationResult = UserValidator.validate(req.body);
             if (validationResult.error) {
                 return res.status(400).send({
-                    status: 'error',
+                    success: false,
                     message: validationResult.error.details[0].message
                 });
             }
@@ -36,10 +36,15 @@ class UserController {
             userService.registerUser(req.body, (err, userData) => {
                 if (err) {
                     return res.status(500).send({
+                        sucess:false,
                         message: err.message || "Some error occurred while registering user."
                     });
                 }
-                res.send(userData);
+                res.status(201).send({
+                    success:true,
+                    data:userData,
+                    message:"New User Registered !"
+                });
             });
 
         } catch (error) {
@@ -68,7 +73,7 @@ class UserController {
             });
 
             userService.userLogin(loginDetails, (err, data) => {
-                return err ? res.status(400).send({ success: false, message: err })
+                return err ? res.status(404).send({ success: false, message: err })
                     : res.status(200).send({ success: true, message: "User Login Successful", data: data });
             });
         } catch (error) {
