@@ -44,13 +44,13 @@ class UserService {
         try {
             User.userLogin(loginDetails, (err, data) => {
                 if (err) {
-                    return callback(err, null)
+                    return callback(err, null);
                 }
                 if (helper.checkPassword(loginDetails.password, data.password)) {
-                    return callback("Pasword is incorrect", null);
+                    const userToken = helper.getGeneratedToken(loginDetails);
+                    return userToken ? callback(null, userToken) : callback("Error Generating Token", null);
                 }
-                const userToken = helper.getGeneratedToken(loginDetails);
-                return callback(null, userToken);
+                return callback("Pasword is incorrect", null);
             });
         } catch (error) {
             return callback(error, null);

@@ -29,7 +29,7 @@ class Helper {
    */
     checkPassword(userEnteredPassword, passwordInDB) {
         return userEnteredPassword && passwordInDB
-            ? (!bcrypt.compareSync(userEnteredPassword, passwordInDB))
+            ? (bcrypt.compareSync(userEnteredPassword, passwordInDB))
             : false;
     }
     /**
