@@ -1,0 +1,68 @@
+{
+    "registerUserData": {
+        "firstName": "virat",
+        "lastName": "kohli",
+        "emailId": "virat007@gmail.com",
+        "password": "virat@123"
+    },
+    "registerUserDataWithFirstNameLessThan3Characters": {
+        "firstName": "v",
+        "lastName": "kohli",
+        "emailId": "virat007@gmail.com",
+        "password": "virat@123"
+    },
+    "addEmployeeData": {
+        "firstName": "virat",
+        "lastName": "kohli",
+        "emailId": "virat007@gmail.com",
+        "password": "virat@123"
+    },
+    "addEmployeeDataWithIncorrectFirstName": {
+        "firstName": "v",
+        "lastName": "kohli",
+        "emailId": "virat007@gmail.com",
+        "password": "virat@123"
+    },
+    "addEmployeeDataWithoutName": {
+        "emailId": "virat007@gmail.com",
+        "password": "virat@123"
+    },
+    "loginData": {
+        "emailId": "shaheen5@gmail.com",
+        "password": "hello@123"
+    },
+    "loginDataWithIncorrectEmailID": {
+        "emailId": "abc@gmail.com",
+        "password": "pqr@123"
+    },
+    "deletePersonId": {
+        "id": "60d1a7403068c41d4859134a"
+    },
+    "deleteIncorrectId": {
+        "id": "1abcdef12345"
+    },
+    "updateEmployeeDetails": {
+        "firstName": "virat",
+        "lastName": "kohli",
+        "emailId": "virat007@gmail.com",
+        "password": "virat@123"
+    },
+    "updateEmployeeDetailsWithWrongId": {
+        "firstName": "virat",
+        "lastName": "kohli",
+        "emailId": "virat007@gmail.com",
+        "password": "virat@123"
+    },
+    "updateEmployeeId": {
+        "id": "60cc23243c8cb92f68bd5efd"
+    },
+    "updateEmployeeWrongId": {
+        "id": "60cc23243c"
+    },
+    "getEmployeeDetailsId": {
+        "id": "60c90a1c4c728d4764a4cabc"
+    },
+    "getEmployeeDetailsWrongId": {
+        "id": "abc123"
+    }
+}

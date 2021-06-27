@@ -27,7 +27,7 @@ module.exports = (app) => {
     app.post('/employees', helper.authenticateToken, employee.createNewEmployee);
 
     // Retrieve all employee
-    app.get('/getEmployees', helper.authenticateToken,employee.getAllEmployees);
+    app.get('/getEmployees', helper.authenticateToken, employee.getAllEmployees);
 
     // Retrieve a single Employee with employeeId
     app.get('/getEmployee/:employeeId', helper.authenticateToken, employee.findEmployee);
