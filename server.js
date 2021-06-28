@@ -24,6 +24,8 @@ const swaggerUi = require('swagger-ui-express');
 
 const swaggerDocument = require('./swagger/swagger.json');
 
+const {logger} = require('./config/logger'); 
+
 //parse requests of content-type application/x-www-form-urlencoded
 app.use(express.urlencoded({extended:true}))
 
@@ -35,6 +37,7 @@ app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
 
 // Configuring the database
 const dbConnect = require('./config/database.config');
+const { loggers } = require('winston');
 dbConnect();
 
 // Require routes
@@ -46,6 +49,7 @@ app.get('/',(req,res)=>{
 });
 
 app.listen(process.env.PORT,()=>{
+    logger.info(`Server is running at localhost : ${process.env.PORT}`);
     console.log(`Server is listening at port ${process.env.PORT}`);
 });
 
