@@ -40,7 +40,7 @@ class Helper {
     getGeneratedToken(userData) {
         try {
             const token = jwt.sign(userData, process.env.SECRET_KEY, {
-                expiresIn: '200000s',
+                expiresIn: '200000000s',
             });
             return token;
         } catch (error) {
@@ -55,14 +55,13 @@ class Helper {
    * @returns HTTP status and object
    */
     authenticateToken(req, res, next) {
-        const token = req.get('token');
-
+        const token = req.headers.authorization;
         if (token) {
-            jwt.verify(token, process.env.SECRET_KEY, (err) => {
+            jwt.verify(token.split(" ")[1], process.env.SECRET_KEY, (err) => {
                 if (err) {
-                    return res.status(400).send({
+                    return res.status(500).send({
                         success: false,
-                        message: err.message || 'Invalid token!',
+                        message: err.message || 'Failed To Authenticate Token!',
                     });
                 } else {
                     next();

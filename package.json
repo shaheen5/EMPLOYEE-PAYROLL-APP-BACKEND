@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Employee Payroll Application With REST,Node,Express & MOngoDB\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Using \u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~REST,NODE,EXPRESS & MONGODB",
   "main": "server.js",
-  "directories":{
-    "test":"/test/"
-    },
-    "scripts": {
+  "directories": {
+    "test": "/test/"
+  },
+  "scripts": {
     "test": "mocha --timeout 10000",
     "start": "node server.js"
   },
@@ -37,7 +37,8 @@
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.13",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "mocha": "^9.0.1"
