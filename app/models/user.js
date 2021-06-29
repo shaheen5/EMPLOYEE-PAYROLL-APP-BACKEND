@@ -6,7 +6,7 @@
  *
  * @description  :modules need to be required before execution of this file  
  *
- * @file        : models/user.model.js
+ * @file        : models/user.js
  * @overview    : Provides schema for database and performs mongoose CRUD operations
  * @module      : neccessary to define user schema for database ,define functions accessed by services layer  
  * @author      : Shaheen M.

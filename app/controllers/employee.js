@@ -14,7 +14,7 @@
  * @since       : 15-06-2021
  **********************************************************************************************************/
 
-const EmployeeService = require('../services/employee.service');
+const EmployeeService = require('../services/employee.js');
 const EmployeeValidator = require('../middlewares/EmployeeValidation');
 
 class EmployeeController {

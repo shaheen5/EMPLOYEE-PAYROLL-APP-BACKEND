@@ -2,7 +2,7 @@
     "registerUserData": {
         "firstName": "virat",
         "lastName": "kohli",
-        "emailId": "virat007@gmail.com",
+        "emailId": "virat0017@gmail.com",
         "password": "virat@123"
     },
     "registerUserDataWithFirstNameLessThan3Characters": {
@@ -36,7 +36,7 @@
         "password": "pqr@123"
     },
     "deletePersonId": {
-        "id": "60d1a7403068c41d4859134a"
+        "id": "60cd688321b66616a8f49c93"
     },
     "deleteIncorrectId": {
         "id": "1abcdef12345"

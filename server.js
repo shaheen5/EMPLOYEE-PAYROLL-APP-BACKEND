@@ -36,12 +36,12 @@ app.use(express.json());
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
 
 // Configuring the database
-const dbConnect = require('./config/database.config');
+const dbConnect = require('./config/database');
 const { loggers } = require('winston');
 dbConnect();
 
 // Require routes
-require('./app/routes/employee.routes.js')(app);
+require('./app/routes/routes.js')(app);
 
 //define a simple route
 app.get('/',(req,res)=>{

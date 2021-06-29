@@ -6,14 +6,14 @@
  *
  * @description  :modules need to be required before execution of this file  
  *
- * @file        : services/user.service.js
+ * @file        : services/user.js
  * @overview    : Performs tasks to interact with controller and model layer
  * @module      : calls functions from model layer which involves db operations & return response to controller  
  * @author      : Shaheen M.
  * @version     : 1.0
  * @since       : 15-06-2021
  **********************************************************************************************************/
-const User = require('../models/user.model');
+const User = require('../models/user');
 const helper = require('../middlewares/helper');
 class UserService {
 

@@ -1,3 +1,18 @@
+/**********************************************************************************************************
+ *  Execution    : 1. Default node with npm   cmd> npm server.js
+                   2. If nodemon installed    cmd> nodemon start
+ *
+ * Purpose      : test cases for testing rest apis
+ *
+ * @description  :mocha & chai package need to be installed & required before execution of this file 
+ *
+ * @file        : test/apitest.js
+ * @overview    : tests the request send by client to handle errors 
+ * @module      : test and authorize token for rest apis request and response 
+ * @author      : Shaheen M.
+ * @version     : 1.0
+ * @since       : 15-06-2021
+ **********************************************************************************************************/
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 //assertion style
@@ -91,7 +106,7 @@ describe('Test APIs', () => {
         it("It should GET all the employees", (done) => {
             chai.request(server)
                 .get("/getEmployees")
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.have.property('message').eq("Successfully Retrieved All Employees !")
@@ -103,7 +118,7 @@ describe('Test APIs', () => {
         it("It should NOT GET all the employees for wrong url", (done) => {
             chai.request(server)
                 .get("/getEmployee")
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(404);
                     done();
@@ -119,7 +134,7 @@ describe('Test APIs', () => {
             chai.request(server)
                 .post('/employees')
                 .send(employee)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.be.a('object');
                     res.should.have.status(201);
@@ -135,7 +150,7 @@ describe('Test APIs', () => {
             chai.request(server)
                 .post('/employees')
                 .send(employee)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(400);
                     res.body.should.have.property('success').eq(false);
@@ -149,7 +164,7 @@ describe('Test APIs', () => {
             chai.request(server)
                 .post('/employees')
                 .send(employee)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(400);
                     res.body.should.have.property('success').eq(false);
@@ -168,7 +183,7 @@ describe('Test APIs', () => {
             chai.request(server)
                 .put('/updateEmployee/' + id)
                 .send(employee)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -187,7 +202,7 @@ describe('Test APIs', () => {
             chai.request(server)
                 .put('/updateEmployee/' + id)
                 .send(employee)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(404);
                     res.body.should.be.a('object');
@@ -204,7 +219,7 @@ describe('Test APIs', () => {
             const id = testDataInput.getEmployeeDetailsId.id;
             chai.request(server)
                 .get('/getEmployee/' + id)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -221,7 +236,7 @@ describe('Test APIs', () => {
             const id = testDataInput.getEmployeeDetailsWrongId.id;
             chai.request(server)
                 .get('/getEmployee/' + id)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(404);
                     done();
@@ -238,7 +253,7 @@ describe('Test APIs', () => {
             const id = testDataInput.deletePersonId.id;
             chai.request(server)
                 .put('/deleteEmployee/' + id)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -256,7 +271,7 @@ describe('Test APIs', () => {
             const id = testDataInput.deleteIncorrectId.id;
             chai.request(server)
                 .put('/deleteEmployee/' + id)
-                .set('token', userToken)
+                .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(404);
                     done();

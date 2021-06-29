@@ -13,7 +13,7 @@
  * @version     : 1.0
  * @since       : 15-06-2021
  **********************************************************************************************************/
-const userService = require('../services/user.service');
+const userService = require('../services/user');
 const UserValidator = require('../middlewares/UserValidation');
 
 class UserController {

@@ -6,7 +6,7 @@
  *
  * @description  :modules need to be required before execution of this file  
  *
- * @file        : routes/employee.routes.js
+ * @file        : routes/routes.js
  * @overview    : defines routes for login,registration and employee crud operation web pages
  * @module      :  use HTTP methods to send request to server 
  * @author      : Shaheen M.
@@ -14,8 +14,8 @@
  * @since       : 15-06-2021
  **********************************************************************************************************/
 module.exports = (app) => {
-    const employee = require('../controllers/employee.controller.js');
-    const user = require('../controllers/users.controller');
+    const employee = require('../controllers/employee');
+    const user = require('../controllers/users');
     const helper = require('../middlewares/helper');
     // Create a new user
     app.post('/registerUser', user.registerUser);

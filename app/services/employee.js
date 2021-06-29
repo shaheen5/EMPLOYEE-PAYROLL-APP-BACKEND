@@ -6,14 +6,14 @@
  *
  * @description  :modules need to be required before execution of this file  
  *
- * @file        : services/employee.service.js
+ * @file        : services/employee.js
  * @overview    : Performs tasks to interact with controller and model layer
  * @module      : calls functions from model layer which involves db operations & return response to controller  
  * @author      : Shaheen M.
  * @version     : 1.0
  * @since       : 15-06-2021
  **********************************************************************************************************/
-const Employee = require('../models/employee.model.js');
+const Employee = require('../models/employee');
 
 class EmployeeOperationsService {
 

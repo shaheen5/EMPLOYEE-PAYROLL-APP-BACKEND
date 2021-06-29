@@ -1,3 +1,18 @@
+/**********************************************************************************************************
+ *  Execution    : 1. Default node with npm   cmd> npm server.js
+                   2. If nodemon installed    cmd> nodemon start
+ *
+ * Purpose      : Log info and error messages in log files
+ *
+ * @description  :winston package need to be installed & required before execution of this file 
+ *
+ * @file        : config/logger.js
+ * @overview    : creates a logger to write logs into two log files 
+ * @module      : logs error messages into error.log file & info messages in info.log 
+ * @author      : Shaheen M.
+ * @version     : 1.0
+ * @since       : 15-06-2021
+ **********************************************************************************************************/
 const winston = require('winston');
 module.exports.logger = winston.createLogger({
     'transports': [
