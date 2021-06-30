@@ -56,6 +56,13 @@ userSchema.pre("save", function (next) {
     });
 });
 
+//comparing passwords for the authentication
+userSchema.methods.comparePassword = (clientPassword, callback) => {
+    bcrypt.compare(clientPassword, this.password, (err, matched) => {
+        return err ? callback(err, null) : callback(null, matched);
+    });
+};
+
 const User = mongoose.model('User', userSchema);
 
 class UserRegistrationAndLogin {
@@ -91,7 +98,7 @@ class UserRegistrationAndLogin {
             User.findOne({ emailId: loginDetails.emailId }, (err, data) => {
                 if (err) return callback(err, null);
                 if (!data) return callback('User Not Found', null);
-                return callback(null,data);
+                return callback(null, data);
             });
         } catch (error) {
             return callback(error, null);

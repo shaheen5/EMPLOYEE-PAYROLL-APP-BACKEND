@@ -54,6 +54,14 @@ employeeSchema.pre("save", function (next) {
     });
 });
 
+//comparing passwords for the authentication
+employeeSchema.methods.comparePassword = (clientPassword, callback) => {
+    bcrypt.compare(clientPassword, this.password, (err, matched) => {
+        return err ? callback(err, null) : callback(null, matched);
+    });
+};
+
+
 const Employee = mongoose.model('Employee', employeeSchema);
 
 class UserOperations {
