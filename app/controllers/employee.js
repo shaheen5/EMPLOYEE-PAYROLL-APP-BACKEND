@@ -14,8 +14,8 @@
  * @since       : 15-06-2021
  **********************************************************************************************************/
 
-const EmployeeService = require('../services/employee.js');
-const EmployeeValidator = require('../middlewares/EmployeeValidation');
+const employeeService = require('../services/employee.js');
+const employeeValidator = require('../middlewares/EmployeeValidation');
 
 class EmployeeController {
 
@@ -32,14 +32,14 @@ class EmployeeController {
             if ( Object.keys(req.body).length != 4) {
                 return res.status(400).send({ success: false, message: "Invalid Input!" });
             }
-            let validationResult = EmployeeValidator.validate(req.body);
+            let validationResult = employeeValidator.validate(req.body);
             if (validationResult.error) {
                 return res.status(400).send({
                     success: false,
                     message: validationResult.error.details[0].message
                 });
             }
-            EmployeeService.createEmployee(req.body, (error, resultData) => {
+            employeeService.createEmployee(req.body, (error, resultData) => {
                 if (error) {
                     return res.status(500).send({
                         success: false,
@@ -68,7 +68,7 @@ class EmployeeController {
    */
     getAllEmployees = (req, res) => {
         try {
-            EmployeeService.findAllEmployees((error, employees) => {
+            employeeService.findAllEmployees((error, employees) => {
                 if (error) {
                     return res.status(500).send({
                         success: false,
@@ -100,7 +100,7 @@ class EmployeeController {
    */
     findEmployee = (req, res) => {
         try {
-            EmployeeService.findEmployee(req.params.employeeId, (error, resultData) => {
+            employeeService.findEmployee(req.params.employeeId, (error, resultData) => {
                 if (error) {
                     if (error.kind === 'ObjectId') {
                         return res.status(404).send({
@@ -144,7 +144,7 @@ class EmployeeController {
              if (Object.keys(req.body).length != 4) {
                 return res.status(400).send({ success: false, message: "Invalid Input!" });
             }
-            EmployeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
+            employeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
                 if (error) {
                     if (error.kind === 'ObjectId') {
                         return res.status(404).send({
@@ -179,7 +179,7 @@ class EmployeeController {
        */
     deleteEmployee = (req, res) => {
         try {
-            EmployeeService.deleteEmployee(req.params.employeeId, (error, message) => {
+            employeeService.deleteEmployee(req.params.employeeId, (error, message) => {
                 if (error) {
                     return res.status(500).send({
                         success: false,

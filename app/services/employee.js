@@ -13,7 +13,7 @@
  * @version     : 1.0
  * @since       : 15-06-2021
  **********************************************************************************************************/
-const Employee = require('../models/employee');
+const employeeModel = require('../models/employee');
 
 class EmployeeOperationsService {
 
@@ -25,7 +25,7 @@ class EmployeeOperationsService {
        */
     createEmployee = (empData, callback) => {
         try {
-            Employee.addEmployee(empData, (error, data) => {
+            employeeModel.addEmployee(empData, (error, data) => {
                 return (error) ? callback(error, null) : callback(null, data);
             });
         } catch (error) {
@@ -39,7 +39,7 @@ class EmployeeOperationsService {
    */
     findAllEmployees = (callback) => {
         try {
-            Employee.findAllEmployees((error, empData) => {
+            employeeModel.findAllEmployees((error, empData) => {
                 return (error) ? callback(error, null) : callback(null, empData);
             });
         } catch (error) {
@@ -55,7 +55,7 @@ class EmployeeOperationsService {
    */
     findEmployee = (employeeId, callback) => {
         try {
-            Employee.findEmployeeById(employeeId, (error, empData) => {
+            employeeModel.findEmployeeById(employeeId, (error, empData) => {
                 return (error) ? callback(error, null) : callback(null, empData);
             });
         } catch (error) {
@@ -71,7 +71,7 @@ class EmployeeOperationsService {
      */
     updateEmployeeDetails = (employeeId, empData, callback) => {
         try {
-            Employee.updateEmployeeById(employeeId, empData, (error, data) => {
+            employeeModel.updateEmployeeById(employeeId, empData, (error, data) => {
                 return (error) ? callback(error, null) : callback(null, data);
             });
         } catch (error) {
@@ -87,9 +87,9 @@ class EmployeeOperationsService {
    */
     deleteEmployee = (employeeId, callback) => {
         try {
-            Employee.removeEmployee(employeeId, (error, message) => {
-                if (error) return callback(error, { "message": "Employee could not be deleted" });
-                else return callback(null, { "message": "Employee was deleted successfully" });
+            employeeModel.removeEmployee(employeeId, (error, message) => {
+                if (error) return callback(error, { "message": "employeeModel could not be deleted" });
+                else return callback(null, { "message": "employeeModel was deleted successfully" });
             });
         } catch (error) {
             return callback(error,null);

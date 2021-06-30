@@ -13,8 +13,9 @@
  * @version     : 1.0
  * @since       : 15-06-2021
  **********************************************************************************************************/
-const User = require('../models/user');
+const userModel = require('../models/user');
 const helper = require('../middlewares/helper');
+
 class UserService {
 
     /**
@@ -26,7 +27,7 @@ class UserService {
 
     registerUser = (userData, callback) => {
         try {
-            User.addNewUser(userData, (error, data) => {
+            userModel.addNewUser(userData, (error, data) => {
                 return (error) ? callback(error, null) : callback(null, data);
             });
         } catch (error) {
@@ -42,7 +43,7 @@ class UserService {
        */
     userLogin = (loginDetails, callback) => {
         try {
-            User.userLogin(loginDetails, (err, data) => {
+            userModel.userLogin(loginDetails, (err, data) => {
                 if (err) {
                     return callback(err, null);
                 }

@@ -16,7 +16,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const EmployeeSchema = mongoose.Schema({
+const employeeSchema = mongoose.Schema({
     firstName: {
         type: String,
         required: true,
@@ -42,7 +42,7 @@ const EmployeeSchema = mongoose.Schema({
     timestamps: true
 });
 
-EmployeeSchema.pre("save", function (next) {
+employeeSchema.pre("save", function (next) {
     const employee = this;
 
     bcrypt.hash(this.password, 10, (err, hashedPassword) => {
@@ -54,7 +54,7 @@ EmployeeSchema.pre("save", function (next) {
     });
 });
 
-const Employee = mongoose.model('Employee', EmployeeSchema);
+const Employee = mongoose.model('Employee', employeeSchema);
 
 class UserOperations {
     /**

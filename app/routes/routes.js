@@ -17,6 +17,7 @@ module.exports = (app) => {
     const employee = require('../controllers/employee');
     const user = require('../controllers/users');
     const helper = require('../middlewares/helper');
+    
     // Create a new user
     app.post('/registerUser', user.registerUser);
 

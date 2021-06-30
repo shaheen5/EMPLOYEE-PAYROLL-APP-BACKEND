@@ -14,7 +14,7 @@
  * @since       : 15-06-2021
  **********************************************************************************************************/
 const userService = require('../services/user');
-const UserValidator = require('../middlewares/UserValidation');
+const userValidator = require('../middlewares/UserValidation');
 
 class UserController {
     /**
@@ -25,7 +25,7 @@ class UserController {
         */
     registerUser = (req, res) => {
         try {
-            let validationResult = UserValidator.validate(req.body);
+            let validationResult = userValidator.validate(req.body);
             if (validationResult.error) {
                 return res.status(400).send({
                     success: false,

@@ -18,7 +18,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
-const UserSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     firstName: {
         type: String,
         required: true,
@@ -44,7 +44,7 @@ const UserSchema = mongoose.Schema({
 });
 
 //encrypt password using hashing before saving in database
-UserSchema.pre("save", function (next) {
+userSchema.pre("save", function (next) {
     const employee = this;
 
     bcrypt.hash(this.password, 10, (err, hashedPassword) => {
@@ -56,7 +56,7 @@ UserSchema.pre("save", function (next) {
     });
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
 
 class UserRegistrationAndLogin {
     /**

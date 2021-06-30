@@ -15,7 +15,7 @@
  **********************************************************************************************************/
 const Joi = require('joi');
 
-const UserObjectSchema = Joi.object({
+const userObjectSchema = Joi.object({
     firstName: Joi.string()
         .alphanum()
         .min(3)
@@ -33,4 +33,4 @@ const UserObjectSchema = Joi.object({
         .pattern(new RegExp("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"))
         .required()
 });
-module.exports = UserObjectSchema;
+module.exports = userObjectSchema;
