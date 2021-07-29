@@ -252,7 +252,7 @@ describe('Test APIs', () => {
 
             const id = testDataInput.deletePersonId.id;
             chai.request(server)
-                .put('/deleteEmployee/' + id)
+                .delete('/deleteEmployee/' + id)
                 .set('Authorization',`Bearer ${userToken}`)
                 .end((err, res) => {
                     res.should.have.status(200);

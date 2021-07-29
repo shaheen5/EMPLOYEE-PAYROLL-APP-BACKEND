@@ -29,7 +29,7 @@ class EmployeeController {
     createNewEmployee = (req, res) => {
         try {
             //check whether request body input length is 4 
-            if ( Object.keys(req.body).length != 4) {
+            if ( Object.keys(req.body).length != 6) {
                 return res.status(400).send({ success: false, message: "Invalid Input!" });
             }
             let validationResult = employeeValidator.validate(req.body);
@@ -120,7 +120,7 @@ class EmployeeController {
                         message: "Found Employee Details successfully!"
                     });
                 }else{
-                    res.send(404).send({
+                    res.status(404).send({
                         succes:false,
                         message:"Data is not available for given id"
                     });
@@ -141,7 +141,7 @@ class EmployeeController {
     updateEmployee = (req, res) => {
         try {
              //check whether request body contains only 4 input properties
-             if (Object.keys(req.body).length != 4) {
+             if (Object.keys(req.body).length != 6) {
                 return res.status(400).send({ success: false, message: "Invalid Input!" });
             }
             employeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {

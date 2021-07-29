@@ -88,8 +88,8 @@ class EmployeeOperationsService {
     deleteEmployee = (employeeId, callback) => {
         try {
             employeeModel.removeEmployee(employeeId, (error, message) => {
-                if (error) return callback(error, { "message": "employeeModel could not be deleted" });
-                else return callback(null, { "message": "employeeModel was deleted successfully" });
+                if (error) return callback(error,"employee could not be deleted");
+                else return callback(null,message);
             });
         } catch (error) {
             return callback(error,null);
