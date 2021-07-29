@@ -120,7 +120,7 @@ class EmployeeController {
                         message: "Found Employee Details successfully!"
                     });
                 }else{
-                    res.send(404).send({
+                    res.status(404).send({
                         succes:false,
                         message:"Data is not available for given id"
                     });
