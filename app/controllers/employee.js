@@ -144,6 +144,13 @@ class EmployeeController {
              if (Object.keys(req.body).length != 6) {
                 return res.status(400).send({ success: false, message: "Invalid Input!" });
             }
+            let validationResult = employeeValidator.validate(req.body);
+            if (validationResult.error) {
+                return res.status(400).send({
+                    success: false,
+                    message: validationResult.error.details[0].message
+                });
+            }
             employeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
                 if (error) {
                     if (error.kind === 'ObjectId') {
