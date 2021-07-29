@@ -27,40 +27,30 @@ const employeeSchema = mongoose.Schema({
         required: true,
         validate: /^[a-zA-Z]{3,20}$/
     },
+    gender:{
+        type:String,
+        required:true,
+        validate:/^[a-zA-Z]/
+    },
+    salary:{
+        type:String,
+        required:true,
+        validate: /^[0-9]/
+    },
+    department:{
+        type:String,
+        required:true,
+        validate: /^[a-zA-Z]{2,20}$/
+    },
     emailId: {
         type: String,
         required: true,
         validate: /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9]+[.]+[a-zA-Z]+$/,
         unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-        validate: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
     }
 }, {
     timestamps: true
 });
-
-employeeSchema.pre("save", function (next) {
-    const employee = this;
-
-    bcrypt.hash(this.password, 10, (err, hashedPassword) => {
-        if (err) {
-            return next(err);
-        }
-        employee.password = hashedPassword;
-        next();
-    });
-});
-
-//comparing passwords for the authentication
-employeeSchema.methods.comparePassword = (clientPassword, callback) => {
-    bcrypt.compare(clientPassword, this.password, (err, matched) => {
-        return err ? callback(err, null) : callback(null, matched);
-    });
-};
-
 
 const Employee = mongoose.model('Employee', employeeSchema);
 
@@ -75,8 +65,10 @@ class UserOperations {
             const employee = new Employee({
                 firstName: empData.firstName,
                 lastName: empData.lastName,
-                emailId: empData.emailId,
-                password: empData.password
+                gender:empData.gender,
+                salary:empData.salary,
+                department:empData.department,
+                emailId: empData.emailId
             });
             employee.save({}, (error, empData) => {
                 return (error) ? callback(error, null) : callback(null, empData);
@@ -124,8 +116,10 @@ class UserOperations {
             Employee.findByIdAndUpdate(employeeId, {
                 firstName: empData.firstName,
                 lastName: empData.lastName,
-                emailId: empData.emailId,
-                password: empData.password
+                gender:empData.gender,
+                salary:empData.salary,
+                department:empData.department,
+                emailId: empData.emailId
             }, { new: true }, (error, Data) => {
                 return (error) ? callback(error, null) : callback(null, Data);
             });
@@ -142,7 +136,7 @@ class UserOperations {
         try {
             Employee.findByIdAndRemove(employeeId, (error, message) => {
                 if (error) return callback(error, { "message": error.message });
-                else return callback(null, { "message": "Employee was deleted successfully" });
+                else return callback(null,"Employee was deleted successfully");
             });
         } catch (error) {
             return callback(error, "Some error occurred!");

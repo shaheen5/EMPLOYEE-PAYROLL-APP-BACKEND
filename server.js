@@ -16,9 +16,13 @@
 
 const express = require('express');
 require('dotenv').config();
+var cors = require('cors')
+
 
 //create express app
 const app = express();
+
+app.use(cors());
 
 const swaggerUi = require('swagger-ui-express');
 
@@ -31,6 +35,7 @@ app.use(express.urlencoded({extended:true}))
 
 // parse requests of content-type - application/json
 app.use(express.json());
+
 
 //using swagger UI 
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));

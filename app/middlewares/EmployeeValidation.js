@@ -26,11 +26,20 @@ const employeeObjectSchema = Joi.object({
         .min(3)
         .max(30)
         .required(),
+    gender:Joi.string()
+        .alphanum()
+        .max(6)
+        .required(),
+    salary:Joi.number()
+        .integer()
+        .required(),
+    department:Joi.string()
+        .alphanum()
+        .min(2)
+        .max(20)
+        .required(),
     emailId: Joi.string()
         .email()
-        .required(),
-    password: Joi.string()
-        .pattern(new RegExp("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"))
         .required()
 });
 module.exports = employeeObjectSchema;
