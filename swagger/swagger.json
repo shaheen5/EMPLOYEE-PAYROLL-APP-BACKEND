@@ -5,7 +5,7 @@
     "description": "Employee Payoll App API",
     "version": "1.0.0"
   },
-  "host": "18.217.197.173:8000",
+  "host": "3.16.130.136/:8000",
   "basePath": "/",
   "tags": [],
   "schemes": [
