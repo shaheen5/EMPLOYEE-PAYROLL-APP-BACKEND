@@ -29,7 +29,7 @@ class EmployeeController {
     createNewEmployee = (req, res) => {
         try {
             //check whether request body input length is 4 
-            if ( Object.keys(req.body).length != 6) {
+            if (Object.keys(req.body).length != 6) {
                 return res.status(400).send({ success: false, message: "Invalid Input!" });
             }
             let validationResult = employeeValidator.validate(req.body);
@@ -43,14 +43,15 @@ class EmployeeController {
                 if (error) {
                     return res.status(500).send({
                         success: false,
-                        message: error.message || "Some error occurred while creating Employee."
+                        message: "Some error occurred while creating Employee."
+                    });
+                } else {
+                    return res.status(201).send({
+                        success: true,
+                        data: resultData,
+                        message: "Employee Added Succesfully!"
                     });
                 }
-                res.status(201).send({
-                    success: true,
-                    data: resultData,
-                    message: "Employee Added Succesfully!"
-                });
             });
         } catch (error) {
             return res.status(500).send({
@@ -70,19 +71,21 @@ class EmployeeController {
         try {
             employeeService.findAllEmployees((error, employees) => {
                 if (error) {
+                    logger.error('Some error occurred while retrieving employees');
                     return res.status(500).send({
                         success: false,
-                        message: err.message || "Some error occurred while retrieving employees."
+                        message: "Some error occurred while retrieving employees."
                     });
                 }
                 if (!employees) {
                     return res.status(404).send("There are no employees created yet!");
+                } else {
+                    return res.status(200).send({
+                        success: true,
+                        data: employees,
+                        message: "Successfully Retrieved All Employees !"
+                    });
                 }
-                res.status(200).send({
-                    success: true,
-                    data: employees,
-                    message: "Successfully Retrieved All Employees !"
-                });
             });
         } catch (error) {
             return res.status(500).send({
@@ -102,6 +105,7 @@ class EmployeeController {
         try {
             employeeService.findEmployee(req.params.employeeId, (error, resultData) => {
                 if (error) {
+                    logger.error('Some error occurred while retrieving employee');
                     if (error.kind === 'ObjectId') {
                         return res.status(404).send({
                             success: false,
@@ -114,15 +118,15 @@ class EmployeeController {
                     });
                 }
                 if (resultData) {
-                    res.status(200).send({
+                    return res.status(200).send({
                         success: true,
                         data: resultData,
                         message: "Found Employee Details successfully!"
                     });
-                }else{
-                    res.status(404).send({
-                        succes:false,
-                        message:"Data is not available for given id"
+                } else {
+                    return res.status(404).send({
+                        succes: false,
+                        message: "Data is not available for given id"
                     });
                 }
 
@@ -140,8 +144,8 @@ class EmployeeController {
    */
     updateEmployee = (req, res) => {
         try {
-             //check whether request body contains only 4 input properties
-             if (Object.keys(req.body).length != 6) {
+            //check whether request body contains only 4 input properties
+            if (Object.keys(req.body).length != 6) {
                 return res.status(400).send({ success: false, message: "Invalid Input!" });
             }
             let validationResult = employeeValidator.validate(req.body);
@@ -153,20 +157,23 @@ class EmployeeController {
             }
             employeeService.updateEmployeeDetails(req.params.employeeId, req.body, (error, resultData) => {
                 if (error) {
+                    logger.error('Some error occurred while updating employee');
                     if (error.kind === 'ObjectId') {
                         return res.status(404).send({
                             message: "Employee not found with id " + req.params.employeeId
                         });
+                    } else {
+                        return res.status(500).send({
+                            message: "Error updating employee with id " + req.params.employeeId
+                        });
                     }
-                    return res.status(500).send({
-                        message: "Error updating employee with id " + req.params.employeeId
+                } else {
+                    return res.send({
+                        success: true,
+                        message: "Employee Details Updated Successfully!",
+                        data: resultData
                     });
                 }
-                res.send({
-                    success: true,
-                    message: "Employee Details Updated Successfully!",
-                    data: resultData
-                });
             });
 
         } catch (error) {
@@ -186,17 +193,19 @@ class EmployeeController {
        */
     deleteEmployee = (req, res) => {
         try {
-            employeeService.deleteEmployee(req.params.employeeId, (error, message) => {
+            let employeeId = req.params.employeeId;
+            employeeService.deleteEmployee(employeeId, (error, message) => {
                 if (error) {
                     return res.status(500).send({
                         success: false,
-                        message: "Error deleting employee with id "
+                        message: "Error deleting employee with id " + employeeId
+                    });
+                } else {
+                    return res.status(200).send({
+                        success: true,
+                        message: message
                     });
                 }
-                res.status(200).send({
-                    success: true,
-                    message: message
-                });
             });
         } catch (error) {
             return res.send({

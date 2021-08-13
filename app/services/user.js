@@ -15,6 +15,7 @@
  **********************************************************************************************************/
 const userModel = require('../models/user');
 const helper = require('../middlewares/helper');
+const { logger } = require('../../config/logger');
 
 class UserService {
 
@@ -28,9 +29,16 @@ class UserService {
     registerUser = (userData, callback) => {
         try {
             userModel.addNewUser(userData, (error, data) => {
-                return (error) ? callback(error, null) : callback(null, data);
+                if (error) {
+                    logger.error('Some error occurred user registration', error);
+                    return callback(error, null);
+                } else {
+                    logger.info('User Registered Successfully!');
+                    return callback(null, data);
+                }
             });
         } catch (error) {
+            logger.error(error);
             return callback(error, null);
         }
     }
@@ -45,15 +53,18 @@ class UserService {
         try {
             userModel.userLogin(loginDetails, (err, data) => {
                 if (err) {
+                    logger.error('Some error occurred while login', err);
                     return callback(err, null);
                 }
                 if (helper.checkPassword(loginDetails.password, data.password)) {
                     const userToken = helper.getGeneratedToken(loginDetails);
                     return userToken ? callback(null, userToken) : callback("Error Generating Token", null);
+                } else {
+                    return callback("Password is incorrect", null);
                 }
-                return callback("Pasword is incorrect", null);
             });
         } catch (error) {
+            logger.error(error);
             return callback(error, null);
         }
     }

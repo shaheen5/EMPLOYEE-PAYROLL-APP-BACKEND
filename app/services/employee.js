@@ -14,6 +14,7 @@
  * @since       : 15-06-2021
  **********************************************************************************************************/
 const employeeModel = require('../models/employee');
+const { logger } = require('../../config/logger');
 
 class EmployeeOperationsService {
 
@@ -26,9 +27,16 @@ class EmployeeOperationsService {
     createEmployee = (empData, callback) => {
         try {
             employeeModel.addEmployee(empData, (error, data) => {
-                return (error) ? callback(error, null) : callback(null, data);
+                if (error) {
+                    logger.error('Some error occurred while creating employee', error);
+                    return callback(error, null);
+                } else {
+                    logger.info('New Employee Details Added Successfully!');
+                    return callback(null, data);
+                }
             });
         } catch (error) {
+            logger.error(error.message);
             return callback(error, null);
         }
     }
@@ -40,9 +48,16 @@ class EmployeeOperationsService {
     findAllEmployees = (callback) => {
         try {
             employeeModel.findAllEmployees((error, empData) => {
-                return (error) ? callback(error, null) : callback(null, empData);
+                if (error) {
+                    logger.error('Some error occurred while retrieving employees', error);
+                    return callback(error, null);
+                } else {
+                    logger.info('All Employee Records Retrieved Successfully!');
+                    return callback(null, empData);
+                }
             });
         } catch (error) {
+            logger.error(error.message);
             return callback(error, null);
         }
     };
@@ -56,9 +71,16 @@ class EmployeeOperationsService {
     findEmployee = (employeeId, callback) => {
         try {
             employeeModel.findEmployeeById(employeeId, (error, empData) => {
-                return (error) ? callback(error, null) : callback(null, empData);
+                if (error) {
+                    logger.error('Some error occurred while retrieving employee', error);
+                    return callback(error, null);
+                } else {
+                    logger.info('Employee Details Retrieved Successfully!');
+                    return callback(null, empData);
+                }
             });
         } catch (error) {
+            logger.error(error.message);
             return callback(error, null);
         }
     }
@@ -72,9 +94,16 @@ class EmployeeOperationsService {
     updateEmployeeDetails = (employeeId, empData, callback) => {
         try {
             employeeModel.updateEmployeeById(employeeId, empData, (error, data) => {
-                return (error) ? callback(error, null) : callback(null, data);
+                if (error) {
+                    logger.error('Some error occurred while updating employee', error);
+                    return callback(error, null);
+                } else {
+                    logger.info('Employee Details Updated Successfully!');
+                    return callback(null, data);
+                }
             });
         } catch (error) {
+            logger.error(error.message);
             return callback(error, null);
         }
     };
@@ -88,11 +117,17 @@ class EmployeeOperationsService {
     deleteEmployee = (employeeId, callback) => {
         try {
             employeeModel.removeEmployee(employeeId, (error, message) => {
-                if (error) return callback(error,"employee could not be deleted");
-                else return callback(null,message);
+                if (error) {
+                    logger.error('Some error occurred while deleting employee',error);
+                    return callback(error, "employee could not be deleted");
+                } else {
+                    logger.error(`Employee Details Deleted with id ${employeeId}`);
+                    return callback(null, message);
+                }
             });
         } catch (error) {
-            return callback(error,null);
+            logger.error(error.message);
+            return callback(error, null);
         }
     }
 }
